@@ -3,7 +3,7 @@ var cors = require('cors');
 const mongoose = require('mongoose');
 const { MONGO_URL} = require('./config');
 //Rotas
-const postsRoutes = require('./routes/api/post')
+const postsRoutes = require('./routes/api/posts')
 
 const app = express();
 

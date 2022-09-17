@@ -1,26 +1,23 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema ({
-    title:{
+const EventSchema = new Schema ({
+    summary:{
         type: String,
         require: true
     },
-    content:{
+    description:{
         type: String,
         require: true
     },
-    label:{
-        type: String,
+    dataEvento:{
+        type: Date,
         require: true
     },
-    date:{
+    dateCriacao:{
         type: Date,
         default: Date.now
-    },
-    updated:{
-        type: Date
     }
 });
 
-module.exports = mongoose.model('Posts', PostSchema)
+module.exports = mongoose.model('Eventos', EventSchema)
