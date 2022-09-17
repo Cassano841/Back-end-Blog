@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema ({
+const EditalSchema = new Schema ({
     title:{
         type: String,
         require: true
@@ -23,4 +23,4 @@ const PostSchema = new Schema ({
     }
 });
 
-module.exports = mongoose.model('Posts', PostSchema)
+module.exports = mongoose.model('Editais', EditalSchema)

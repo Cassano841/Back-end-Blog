@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const Posts = require("../../models/Posts");
+const Editais = require("../../models/Edital");
 
 //======== GET =============
 router.get("/", async (req, res) => {
   try {
-    const posts = await Posts.find();
-    if (!posts) throw Error("Algo deu errado ao procurar o post!");
-    res.status(200).json(posts);
+    const editais = await Editais.find();
+    if (!editais) throw Error("Algo deu errado ao procurar o post!");
+    res.status(200).json(editais);
   } catch (err) {
     res.status(400).json({
       msg: err,
@@ -18,8 +18,8 @@ router.get("/", async (req, res) => {
 //======== GET =============
 router.get("/lastFivePosts", async (req, res) => {
   try {
-    const lastFivePosts = await Posts.find().sort("-date").limit(5);
-    if (!lastFivePosts) throw Error("Algo deu errado ao procurar o post!");
+    const lastFivePosts = await Editais.find().sort("-date").limit(5);
+    if (!lastFivePosts) throw Error("Algo deu errado ao procurar o edital!");
     res.status(200).json(lastFivePosts);
   } catch (err) {
     res.status(400).json({
@@ -31,10 +31,10 @@ router.get("/lastFivePosts", async (req, res) => {
 //======== GET =============
 router.get("/lastfiveEnsino", async (req, res) => {
   try {
-    const lastFivePosts = await Posts.find({ label: "Ensino" })
+    const lastFivePosts = await Editais.find({ label: "Ensino" })
       .sort("-date")
       .limit(5);
-    if (!lastFivePosts) throw Error("Algo deu errado ao procurar o post!");
+    if (!lastFivePosts) throw Error("Algo deu errado ao procurar o edital!");
     res.status(200).json(lastFivePosts);
   } catch (err) {
     res.status(400).json({
@@ -46,10 +46,10 @@ router.get("/lastfiveEnsino", async (req, res) => {
 //======== GET =============
 router.get("/lastfiveExtensao", async (req, res) => {
   try {
-    const lastFivePosts = await Posts.find({ label: "Extensão" })
+    const lastFivePosts = await Editais.find({ label: "Extensão" })
       .sort("-date")
       .limit(5);
-    if (!lastFivePosts) throw Error("Algo deu errado ao procurar o post!");
+    if (!lastFivePosts) throw Error("Algo deu errado ao procurar o edital!");
     res.status(200).json(lastFivePosts);
   } catch (err) {
     res.status(400).json({
@@ -60,9 +60,9 @@ router.get("/lastfiveExtensao", async (req, res) => {
 //======== GET BY ID =============
 router.get("/:id", async (req, res) => {
   try {
-    const post = await Posts.findById(req.params.id);
-    if (!post) throw Error("Algo deu errado ao procurar o post!");
-    res.status(200).json(post);
+    const edital = await Editais.findById(req.params.id);
+    if (!edital) throw Error("Algo deu errado ao procurar o edital!");
+    res.status(200).json(edital);
   } catch (err) {
     res.status(400).json({
       msg: err,
@@ -71,12 +71,12 @@ router.get("/:id", async (req, res) => {
 });
 //======== POST =============
 router.post("/", async (req, res) => {
-  const newPost = new Posts(req.body);
+  const newEdital = new Editais(req.body);
   try {
-    const post = await newPost.save();
+    const edital = await newEdital.save();
     console.log("Adicionado post novo!");
-    if (!post) throw Error("Algo deu errado ao salvar o post!");
-    res.status(200).json(post);
+    if (!edital) throw Error("Algo deu errado ao salvar o post!");
+    res.status(200).json(edital);
   } catch (err) {
     res.status(400).json({
       msg: err,
@@ -86,9 +86,9 @@ router.post("/", async (req, res) => {
 //======== DELETE =============
 router.delete("/:id", async (req, res) => {
   try {
-    const post = await Posts.findByIdAndDelete(req.params.id);
-    console.log("Post Deletado com sucesso!");
-    if (!post) throw Error("Algo deu errado ao deletar o post!");
+    const edital = await Editais.findByIdAndDelete(req.params.id);
+    console.log("Edital deletado com sucesso!");
+    if (!edital) throw Error("Algo deu errado ao deletar o edital!");
     res.status(200).json({ success: true });
   } catch (err) {
     res.status(400).json({
@@ -99,8 +99,8 @@ router.delete("/:id", async (req, res) => {
 //======== PUT =============
 router.patch("/:id", async (req, res) => {
   try {
-    const post = await Posts.findByIdAndUpdate(req.params.id, req.body);
-    if (!post) throw Error("Algo deu errado ao atualizar o post!");
+    const edital = await Editais.findByIdAndUpdate(req.params.id, req.body);
+    if (!edital) throw Error("Algo deu errado ao atualizar o edital!");
     res.status(200).json(post);
   } catch (err) {
     res.status(400).json({

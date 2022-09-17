@@ -3,7 +3,7 @@ var cors = require('cors');
 const mongoose = require('mongoose');
 const { MONGO_URL} = require('./config');
 //Rotas
-const postsRoutes = require('./routes/api/posts')
+const editaisRoutes = require('./routes/api/edital')
 
 const app = express();
 
@@ -16,7 +16,7 @@ mongoose.connect(MONGO_URL)
     .then(() => console.log('Conectado com sucesso'))
     .catch(err => console.log(err))
 
-app.use('/api/posts', postsRoutes);
+app.use('/api/editais', editaisRoutes);
 
 const port = process.env.port || 5000;
 
