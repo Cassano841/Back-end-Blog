@@ -1,0 +1,27 @@
+[{
+  "_id": {
+    "$oid": "6325f5825abb5dce18501bf6"
+  },
+  "title": "edital novo",
+  "content": "edital novo sobre tal assunto",
+  "label": "Ensino",
+  "date": {
+    "$date": {
+      "$numberLong": "1663432066445"
+    }
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6326323d9b529259b19cdf28"
+  },
+  "title": "edital novo",
+  "content": "edital novo sobre tal assunto",
+  "label": "Ensino",
+  "date": {
+    "$date": {
+      "$numberLong": "1663432066445"
+    }
+  },
+  "__v": 0
+}]

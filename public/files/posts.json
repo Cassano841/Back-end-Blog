@@ -1,0 +1,40 @@
+[{
+  "_id": {
+    "$oid": "6325f5825abb5dce18501bf6"
+  },
+  "title": "edital novo",
+  "content": "edital novo sobre tal assunto",
+  "label": "Ensino",
+  "date": {
+    "$date": {
+      "$numberLong": "1663432066445"
+    }
+  },
+  "__v": 0
+}],
+[{
+  "_id": {
+    "$oid": "2"
+  },
+  "title": "edital de teste json",
+  "content": "edital de teste json",
+  "label": "Extensão",
+  "date": {
+    "$date": {
+      "$numberLong": "1663432066445"
+    }
+  },
+  "__v": 0
+}]
+
+
+
+
+nada mais para refatorar
+
+quando tudo tiver pronto, versão estável, fazer toda a refatoração
+
+reta final
+
+precisa ter este pensamento de aplicação pronta
+

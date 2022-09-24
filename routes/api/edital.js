@@ -15,6 +15,20 @@ router.get("/", async (req, res) => {
   }
 });
 
+//======== GET DESTAQUES =============
+router.get("/destaques", async (req, res) => {
+  try {
+    const destaques = await Editais.find({checked: true});
+    if (!destaques) throw Error("Algo deu errado ao procurar o edital!");
+    res.status(200).json(destaques);
+  } catch (err) {
+    res.status(400).json({
+      msg: err,
+    });
+  }
+});
+
+
 //======== GET =============
 router.get("/lastFivePosts", async (req, res) => {
   try {
@@ -74,8 +88,8 @@ router.post("/", async (req, res) => {
   const newEdital = new Editais(req.body);
   try {
     const edital = await newEdital.save();
-    console.log("Adicionado post novo!");
-    if (!edital) throw Error("Algo deu errado ao salvar o post!");
+    console.log("Adicionado edital novo!");
+    if (!edital) throw Error("Algo deu errado ao salvar o edital!");
     res.status(200).json(edital);
   } catch (err) {
     res.status(400).json({

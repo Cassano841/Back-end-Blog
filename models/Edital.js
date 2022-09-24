@@ -20,6 +20,9 @@ const EditalSchema = new Schema ({
     },
     updated:{
         type: Date
+    },
+    checked:{
+        type: Boolean
     }
 });
 
