@@ -7,6 +7,8 @@ const fs = require('fs');
 
 //Rotas
 const editaisRoutes = require('./routes/api/edital');
+//const eventosRoutes = require('./routes/api/event');
+
 const Edital = require('./models/Edital');
 
 const app = express();
