@@ -2,9 +2,12 @@ const express = require('express');
 var cors = require('cors');
 const fileUpload = require("express-fileupload");
 const mongoose = require('mongoose');
-const { MONGO_URL} = require('./config');
+const { MONGO_URL } = require('./config');
+const fs = require('fs');
+
 //Rotas
-const editaisRoutes = require('./routes/api/edital')
+const editaisRoutes = require('./routes/api/edital');
+const Edital = require('./models/Edital');
 
 const app = express();
 
@@ -21,25 +24,38 @@ app.use('/api/editais', editaisRoutes);
 
 app.use(
     fileUpload({
-        useTempFiles:true,
-        saleFileNames: true,
-        preserveExtensions: true,
+        useTempFiles: true,
+        //safeFileNames: true,
+        preserveExtension: true,
         tempFileDir: `${__dirname}/public/files/temp`
     })
 );
 
-app.post('/upload', (req, res, next) => {
+
+app.post('/uploadjson', (req, res) => {
     let uploadFile = req.files.file;
     const name = uploadFile.name;
     //const md5 = uploadFile.md5();
     const saveAs = `${name}`;
-    uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function(err) {
+
+    const caminho = `${__dirname}/public/files`;
+
+    uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
         if (err) {
             return res.status(500).send(err);
         }
+        console.log("Arquivo enviado");
 
-        return res.status(200).json({ status: 'uploaded', name, saveAs});
+        let editais = fs.readFileSync(`${caminho}/${saveAs}`);
+        let editaisTransformados = JSON.parse(editais);
+        console.log(editaisTransformados);
+        Edital.insertMany(editaisTransformados);
+
+        console.log("Deu bom!");
+
+        return res.status(200).json({ status: 'uploaded', name, saveAs });
     });
+
 });
 
 const port = process.env.port || 5000;

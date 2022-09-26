@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 //======== GET DESTAQUES =============
 router.get("/destaques", async (req, res) => {
   try {
-    const destaques = await Editais.find({checked: true});
+    const destaques = await Editais.find({checked: true}).limit(3);
     if (!destaques) throw Error("Algo deu errado ao procurar o edital!");
     res.status(200).json(destaques);
   } catch (err) {
