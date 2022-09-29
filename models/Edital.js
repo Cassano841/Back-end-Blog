@@ -1,31 +1,31 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const EditalSchema = new Schema ({
-    title:{
+const EditalSchema = new Schema({
+    title: {
         type: String,
         require: true
     },
-    content:{
+    content: {
         type: String,
         require: true
     },
-    label:{
+    label: {
         type: String,
         require: true
     },
-    created:{
+    created: {
         type: Date,
         default: Date.now
     },
-    updated:{
+    updated: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     },
-    checked:{
+    checked: {
         type: Boolean
     },
-    etapas:{
+    etapas: {
         type: Array,
         default: [Date]
     }

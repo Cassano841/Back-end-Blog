@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
 //======== GET DESTAQUES =============
 router.get("/destaques", async (req, res) => {
   try {
-    const destaques = await Editais.find({checked: true}).limit(3);
+    const destaques = await Editais.find({ checked: true }).limit(3);
     if (!destaques) throw Error("Algo deu errado ao procurar o edital!");
     res.status(200).json(destaques);
   } catch (err) {
@@ -83,6 +83,7 @@ router.get("/:id", async (req, res) => {
     });
   }
 });
+
 //======== POST =============
 router.post("/", async (req, res) => {
   const newEdital = new Editais(req.body);
@@ -97,6 +98,7 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
 //======== DELETE =============
 router.delete("/:id", async (req, res) => {
   try {
@@ -110,15 +112,35 @@ router.delete("/:id", async (req, res) => {
     });
   }
 });
+/*
 //======== PUT =============
 router.patch("/:id", async (req, res) => {
   try {
-    const edital = await Editais.findByIdAndUpdate(req.params.id, req.body);
+    const editalAtualizado = await Editais.updateOne(req.params.id, req.body);
+    console.log("Edital atualizado!");
     if (!edital) throw Error("Algo deu errado ao atualizar o edital!");
     res.status(200).json(post);
   } catch (err) {
     res.status(400).json({
       msg: err,
+    });
+  }
+});
+*/
+
+//======== PUT V2 =============
+router.put("/:id", async (req, res) => {
+  const atualizar = (req.body);
+  try {
+    const action = await Editais.findOneAndUpdate(req.params.id, atualizar, {
+      new: true
+    });
+    //console.log(action);
+    if (!action) throw Error("Algo deu errado ao atualizar o edital!");
+    res.status(200).json(action);
+  } catch (err) {
+    res.status(400).json({
+      msg: err
     });
   }
 });
