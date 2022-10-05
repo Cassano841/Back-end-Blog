@@ -60,47 +60,6 @@ app.post('/uploadjson', (req, res) => {
 
 });
 
-/*
-// Regra CRON para limpar a pasta files
-cron.schedule('10 * * * * *', function () {
-    console.log('Regra rodando a cada 10 segundos, verificando pasta files...');
-    console.log(`Iniciando às ${horaAtual}`);
-    fs.readdir(caminhoFiles, (err, files) => {
-        if (err) {
-            throw err;
-        } else {
-            if (files.lenght !== null) {
-                for (const file of files) {
-                    fs.unlink(path.join(caminhoFiles, file), (err) => {
-                        //if (err) throw err;
-                    });
-                    console.log('[FILES] Limpeza efetuada na pasta files');
-                }
-            }
-        }
-    });
-})
-// Regra CRON para limpar a pasta files
-cron.schedule('11 * * * * *', function () {
-    console.log('Regra rodando a cada 10 segundos, verificando pasta temp...');
-    console.log(`Iniciando às ${horaAtual}`);
-    fs.readdir(caminhoTemp, (err, files) => {
-        if (err) {
-            throw err;
-        } else {
-            if (files.lenght !== null) {
-                for (const file of files) {
-                    fs.unlink(path.join(caminhoTemp, file), (err) => {
-                        //if (err) throw err;
-                    });
-                    console.log('[TEMP] Limpeza efetuada na pasta temp');
-                }
-            }
-        }
-    });
-})
-*/
-
 const port = process.env.port || 5000;
 
 app.listen(port, () => console.log(`Serve running at port ${port}`))

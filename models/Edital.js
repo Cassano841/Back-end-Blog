@@ -14,7 +14,10 @@ const EditalSchema = new Schema ({
         type: String,
         require: true
     },
+<<<<<<< HEAD
     date:{
+=======
+>>>>>>> parent of 82450f0 (updates cron e modelagem de esquemas)
     created:{
         type: Date,
         default: Date.now

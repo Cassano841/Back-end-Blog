@@ -2,7 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema ({
+<<<<<<< HEAD
     titulo:{
+=======
+>>>>>>> parent of 82450f0 (updates cron e modelagem de esquemas)
     summary:{
         type: String,
         require: true
