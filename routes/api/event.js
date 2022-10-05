@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
     const newEvent = new Eventos(req.body)
     try {
         const evento = await newEvent.save();
-        console.log('Adicionado post novo!');
+        console.log('Evento adicionado com sucesso!');
         if(!evento) throw Error('Algo deu errado ao salvar o evento!');
         res.status(200).json(evento);
     } catch(err) {
@@ -57,6 +57,7 @@ router.delete('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
     try {
         const evento = await Eventos.findByIdAndUpdate(req.params.id, req.body);
+        console.log('Evento atualizado com sucesso!');
         if(!evento) throw Error('Algo deu errado ao atualizar o evento!');
         res.status(200).json(evento);
     } catch(err) {

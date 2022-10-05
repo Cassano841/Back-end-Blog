@@ -8,13 +8,16 @@ const fs = require('fs');
 const path = require('path');
 const cron = require('node-cron');
 
+
+require('dotenv').config;
+
 const horaAtual = new Date(Date.now()).toUTCString();
 horaAtual.toString();
 
 
 //Rotas
 const editaisRoutes = require('./routes/api/edital');
-//const eventosRoutes = require('./routes/api/event');
+const eventosRoutes = require('./routes/api/event');
 
 const app = express();
 
@@ -24,10 +27,11 @@ app.use(express.json());
 
 //Conexão banco de dados
 mongoose.connect(MONGO_URL)
-    .then(() => console.log('Conectado com sucesso'))
+    .then(() => console.log('Conexão com banco de dados efetuada com sucesso'))
     .catch(err => console.log(err))
 
 app.use('/api/editais', editaisRoutes);
+app.use('/api/eventos', eventosRoutes);
 
 app.use(
     fileUpload({

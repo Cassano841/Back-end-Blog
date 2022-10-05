@@ -1,6 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const Editais = require("../../models/Edital");
+const nodemailer = require('nodemailer');
+
+const transportador = nodemailer.createTransport({
+  host: 'smtp.ethereal.email',
+  port: 587,
+  auth: {
+    user: 'petra91@ethereal.email',
+    pass: 'dMJV7KBHffZupPWGPE'
+  }
+})
 
 //======== GET =============
 router.get("/", async (req, res) => {
@@ -8,6 +18,9 @@ router.get("/", async (req, res) => {
     const editais = await Editais.find();
     if (!editais) throw Error("Algo deu errado ao procurar o post!");
     res.status(200).json(editais);
+
+
+
   } catch (err) {
     res.status(400).json({
       msg: err,
@@ -21,6 +34,19 @@ router.get("/destaques", async (req, res) => {
     const destaques = await Editais.find({ checked: true }).limit(3);
     if (!destaques) throw Error("Algo deu errado ao procurar o edital!");
     res.status(200).json(destaques);
+  } catch (err) {
+    res.status(400).json({
+      msg: err,
+    });
+  }
+});
+
+//======== GET PESQUISA =============
+router.get("/pesquisa", async (req, res) => {
+  try {
+    const pesquisa = await Editais.findOne({ title: req.params });
+    if (!pesquisa) throw Error("Algo deu errado ao procurar o edital!");
+    res.status(200).json(pesquisa);
   } catch (err) {
     res.status(400).json({
       msg: err,
@@ -89,6 +115,24 @@ router.post("/", async (req, res) => {
   const newEdital = new Editais(req.body);
   try {
     const edital = await newEdital.save();
+
+    /*============== ENVIO DE EMAIL ===============*/
+    const enviarEmail = {
+      from: process.env.EMAIL,
+      to: 'ninocb@gmail.com',
+      subject: 'Teste de Envio de Email',
+      text: `Teste de envio de email contendo ${edital.title} `
+    }
+
+    transportador.sendMail(enviarEmail, (err) => {
+      if (err) {
+        console.log(err)
+        return
+      }
+      console.log("Email enviado");
+    })
+    /*============== FINAL ENVIO DE EMAIL ===============*/
+
     console.log("Adicionado edital novo!");
     if (!edital) throw Error("Algo deu errado ao salvar o edital!");
     res.status(200).json(edital);
@@ -99,6 +143,23 @@ router.post("/", async (req, res) => {
   }
 });
 
+//======== PUT =============
+router.put("/:id", async (req, res) => {
+  const atualizar = (req.body);
+  try {
+    const action = await Editais.findByIdAndUpdate(req.params.id, atualizar);
+    console.log("Edital atualizado!");
+
+    console.log(action);
+    if (!action) throw Error("Algo deu errado ao atualizar o edital!");
+    res.status(200).json(action);
+    console.log("Edital editado com sucesso!");
+  } catch (err) {
+    res.status(400).json({
+      msg: err
+    });
+  }
+});
 //======== DELETE =============
 router.delete("/:id", async (req, res) => {
   try {
@@ -112,35 +173,32 @@ router.delete("/:id", async (req, res) => {
     });
   }
 });
-/*
-//======== PUT =============
+
+//======== FAVORITAR =============
 router.patch("/:id", async (req, res) => {
   try {
-    const editalAtualizado = await Editais.updateOne(req.params.id, req.body);
-    console.log("Edital atualizado!");
-    if (!edital) throw Error("Algo deu errado ao atualizar o edital!");
-    res.status(200).json(post);
+    const edital = await Editais.findById(req.params.id);
+    if (!edital) throw Error("Algo deu errado ao procurar o edital!");
+    /*============== ENVIO DE EMAIL ===============*/
+    const enviarEmail = {
+      from: process.env.EMAIL,
+      to: 'ninocb@gmail.com',
+      subject: 'Teste de Envio de Email',
+      text: `Teste de envio de email contendo ${edital.title} `
+    }
+
+    transportador.sendMail(enviarEmail, (err) => {
+      if (err) {
+        console.log(err)
+        return
+      }
+      console.log(`Email enviado referente ao edital ${edital.title}`);
+    })
+    /*============== FINAL ENVIO DE EMAIL ===============*/
+    res.status(200).json(edital);
   } catch (err) {
     res.status(400).json({
       msg: err,
-    });
-  }
-});
-*/
-
-//======== PUT V2 =============
-router.put("/:id", async (req, res) => {
-  const atualizar = (req.body);
-  try {
-    const action = await Editais.findOneAndUpdate(req.params.id, atualizar, {
-      new: true
-    });
-    //console.log(action);
-    if (!action) throw Error("Algo deu errado ao atualizar o edital!");
-    res.status(200).json(action);
-  } catch (err) {
-    res.status(400).json({
-      msg: err
     });
   }
 });
