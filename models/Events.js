@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 
 const EventSchema = new Schema ({
     titulo:{
+    summary:{
+        type: String,
+        require: true
+    },
+    description:{
         type: String,
         require: true
     },

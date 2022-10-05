@@ -3,18 +3,13 @@ var cors = require('cors');
 const fileUpload = require("express-fileupload");
 const mongoose = require('mongoose');
 const { MONGO_URL } = require('./config');
-const Edital = require('./models/Edital');
 const fs = require('fs');
-const path = require('path');
-const cron = require('node-cron');
-
-const horaAtual = new Date(Date.now()).toUTCString();
-horaAtual.toString();
-
 
 //Rotas
 const editaisRoutes = require('./routes/api/edital');
 //const eventosRoutes = require('./routes/api/event');
+
+const Edital = require('./models/Edital');
 
 const app = express();
 
@@ -38,9 +33,6 @@ app.use(
     })
 );
 
-const caminhoFiles = `${__dirname}/public/files`;
-const caminhoTemp = `${__dirname}/public/files/temp`;
-
 
 app.post('/uploadjson', (req, res) => {
     let uploadFile = req.files.file;
@@ -48,18 +40,20 @@ app.post('/uploadjson', (req, res) => {
     //const md5 = uploadFile.md5();
     const saveAs = `${name}`;
 
-    uploadFile.mv(`${caminhoFiles}/${saveAs}`, function (err) {
+    const caminho = `${__dirname}/public/files`;
+
+    uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function (err) {
         if (err) {
             return res.status(500).send(err);
         }
         console.log("Arquivo enviado");
 
-        let editais = fs.readFileSync(`${caminhoFiles}/${saveAs}`);
+        let editais = fs.readFileSync(`${caminho}/${saveAs}`);
         let editaisTransformados = JSON.parse(editais);
         console.log(editaisTransformados);
         Edital.insertMany(editaisTransformados);
 
-        console.log(`Arquivo "${saveAs}" enviado com sucesso!`);
+        console.log("Deu bom!");
 
         return res.status(200).json({ status: 'uploaded', name, saveAs });
     });
@@ -109,4 +103,4 @@ cron.schedule('11 * * * * *', function () {
 
 const port = process.env.port || 5000;
 
-app.listen(port, () => console.log(`Serviço inicializado e rodando a porta ${port} às ${horaAtual}`))
+app.listen(port, () => console.log(`Serve running at port ${port}`))
