@@ -19,6 +19,32 @@ mongoose.connect(MONGO_URL)
 
 app.use('/api/editais', editaisRoutes);
 
+<<<<<<< HEAD
+=======
+app.use(
+    fileUpload({
+        useTempFiles:true,
+        saleFileNames: true,
+        preserveExtensions: true,
+        tempFileDir: `${__dirname}/public/files/temp`
+    })
+);
+
+app.post('/upload', (req, res, next) => {
+    let uploadFile = req.files.file;
+    const name = uploadFile.name;
+    //const md5 = uploadFile.md5();
+    const saveAs = `${name}`;
+    uploadFile.mv(`${__dirname}/public/files/${saveAs}`, function(err) {
+        if (err) {
+            return res.status(500).send(err);
+        }
+
+        return res.status(200).json({ status: 'uploaded', name, saveAs});
+    });
+});
+
+>>>>>>> parent of 0a57cd6 (atuaização rotas e server.js)
 const port = process.env.port || 5000;
 
 app.listen(port, () => console.log(`Serve running at port ${port}`))

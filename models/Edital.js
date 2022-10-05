@@ -20,6 +20,12 @@ const EditalSchema = new Schema ({
     },
     updated:{
         type: Date
+<<<<<<< HEAD
+=======
+    },
+    checked:{
+        type: Boolean
+>>>>>>> parent of 0a57cd6 (atuaização rotas e server.js)
     }
 });
 
