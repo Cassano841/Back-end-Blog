@@ -16,23 +16,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
-//======== GET DESTAQUES =============
-router.get("/destaques", async (req, res) => {
-  try {
-    const destaques = await Editais.find({checked: true});
-    if (!destaques) throw Error("Algo deu errado ao procurar o edital!");
-    res.status(200).json(destaques);
-  } catch (err) {
-    res.status(400).json({
-      msg: err,
-    });
-  }
-});
-
-
->>>>>>> parent of 0a57cd6 (atuaização rotas e server.js)
 //======== GET =============
 router.get("/lastFivePosts", async (req, res) => {
   try {
